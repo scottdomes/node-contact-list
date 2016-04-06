@@ -12,6 +12,7 @@ var db = monk('localhost:27017/nodecontacts');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var contacts = require('./routes/contacts');
 
 var app = express();
 

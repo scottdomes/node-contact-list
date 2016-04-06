@@ -1,0 +1,7 @@
+var contactListData = [];
+
+$(function() {
+
+  populateContacts();
+
+});
