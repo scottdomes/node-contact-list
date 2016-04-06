@@ -10,4 +10,15 @@ router.get('/list', function(req, res) {
   });
 });
 
+/* Post to contacts/new */
+router.post('/new', function(req, res) {
+  var db = req.db;
+  var collection = db.get('contactcollection');
+  collection.insert(req.body, function(err, result) {
+    res.send(
+      (err === null) ? { msg: '' } : { msg: err }
+    );
+  });
+});
+
 module.exports = router;
