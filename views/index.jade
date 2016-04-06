@@ -2,4 +2,8 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  form#formAddContacts(name="addcontact",method="post",action="/contacts/new")
+  input#inputFirstName(type="text", placeholder="First name", name="first_name")
+  input#inputLastName(type="text", placeholder="Last name", name="last_name")
+  input#inputContactEmail(type="text", placeholder="Email", name="contact_email")
+  button#btn-submit-new-contact(type="submit") Submit
