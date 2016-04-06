@@ -3,6 +3,7 @@ var contactListData = [];
 $(function() {
 
   $('#new-contact-submit').on('click', addContact);
+  $('#contactList table tbody').on('click', 'td a.link-delete-contact', deleteContact);
 
   populateContactsTable();
 
@@ -45,7 +46,6 @@ function addContact(event) {
       'last_name': $('#new-contact-form input#inputLastName').val(),
       'email': $('#new-contact-form input#inputContactEmail').val()
     };
-    console.log(newContact);
 
     $.ajax({
       type: 'POST',
@@ -53,7 +53,7 @@ function addContact(event) {
       url: '/contacts/new',
       dataType: 'JSON'
     }).done(function(response) {
-      console.log("AJAX Done!");
+
       if (response.msg === '') {
 
         $('#new-contact-form input').val('');
@@ -69,6 +69,29 @@ function addContact(event) {
   // If errorCount is more than 0
   } else {
     alert('Please fill in all fields!');
+    return false;
+  }
+}
+
+function deleteContact(event) {
+  event.preventDefault();
+
+  var confirmation = confirm('Are you sure you want to delete this contact?');
+
+  if (confirmation === true) {
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/contacts/delete/' + $(this).attr('rel')
+    }).done(function( response ) {
+
+      if (response.msg === '') {
+        populateContactsTable();
+      } else {
+        alert('Error: ' + response.msg);
+      } 
+    });
+  } else {
     return false;
   }
 }
