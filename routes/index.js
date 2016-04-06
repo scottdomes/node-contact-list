@@ -1,3 +1,6 @@
+// Run Mongo DB from its bin:  sudo mongod --dbpath ~/WebDev/node/node-contact-v2/data/
+
+
 var express = require('express');
 var router = express.Router();
 
