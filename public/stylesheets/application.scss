@@ -1,0 +1,66 @@
+$PRIMARY_COLOR: #5A98FA;
+$SECONDARY_COLOR: #FFBE4B;
+$TOPBAR_HEIGHT: 67px;
+
+body {
+  position: relative;
+}
+
+.top-bar {
+  height: $TOPBAR_HEIGHT;
+  background-color: $PRIMARY_COLOR;
+  color: white;
+  padding-top: 0;
+
+  h3 {
+    line-height: $TOPBAR_HEIGHT;
+  }
+}
+
+#new-contact-form {
+  line-height: $TOPBAR_HEIGHT;
+
+  input, label {
+    display: inline-block;
+  }
+
+  input {
+    height: 30px;
+  }
+
+  label {
+    color: white;
+  }
+
+  button {
+    margin: 0;
+    border-radius: 5px;
+  }
+}
+
+#flash {
+  display: block;
+  position: absolute;
+  top: $TOPBAR_HEIGHT;
+  color: white;
+  background-color: green;
+  width: 100%;
+  text-align: center;
+}
+
+.contact-conta {
+  margin: 10px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+/* Foundation Overwrites */
+
+.success.button {
+  background-color: $SECONDARY_COLOR;
+}
+
+.success.button:hover {
+  background-color: #FFA200;
+}
+

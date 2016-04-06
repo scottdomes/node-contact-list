@@ -2,8 +2,23 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='stylesheets/foundation.css')
+    link(rel='stylesheet', href='/stylesheets/application.css')
   body
+
+    div.top-bar
+      div.top-bar-left
+        h3 Your Contacts
+      div.top-bar-right
+        form#new-contact-form(name="addcontact",method="post",action="/contacts/new")
+          input#inputFirstName(type="text", placeholder="First name", name="first_name")
+          input#inputLastName(type="text", placeholder="Last name", name="last_name")
+          input#inputContactEmail(type="text", placeholder="Email", name="contact_email")
+          button#new-contact-submit.success.button(type="submit") Submit
+
     block content
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    script(src='/javascripts/vendor/foundation.js')
     script(src='/javascripts/global.js')
+
+    
