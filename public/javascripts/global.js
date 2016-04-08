@@ -17,7 +17,7 @@ function populateContactsTable() {
   $.getJSON( '/contacts/list', function( data ) {
 
     var contactArray = data.sort(function(a, b) {
-      return a.last_contact - b.last_contact;
+      return moment.utc(a.last_contact).valueOf() - moment.utc(b.last_contact).valueOf();
     });
 
     $.each(contactArray, function() {
@@ -26,7 +26,7 @@ function populateContactsTable() {
       tableContent += this.first_name + ' ' + this.last_name;
       tableContent += '</a></td>';
       tableContent += '<td>' + this.email + '</td>';
-      tableContent += '<td>' + this.last_contact + '</td>';
+      tableContent += '<td>' + moment.utc(this.last_contact).format("MMM do YYYY") + '</td>';
       tableContent += '<td><button class="success button contacted" id="' + this._id + '"> Yes! </button></td>';
       tableContent += '<td><a href="#" class="link-delete-contact" rel="' + this._id + '">Delete</a></td>';
       tableContent += '</tr>';
@@ -52,7 +52,8 @@ function addContact(event) {
       'first_name': $('#new-contact-form input#inputFirstName').val(),
       'last_name': $('#new-contact-form input#inputLastName').val(),
       'email': $('#new-contact-form input#inputContactEmail').val(),
-      'last_contact': moment().format("MMM Do YYYY")
+      'last_contact': moment.utc().format()
+      // 'last_contact': "Apr 01 2016"
     };
 
     $.ajax({
@@ -110,7 +111,7 @@ function updateContactDate(event) {
   $.ajax({
     type: 'PUT',
     url: '/contacts/contacted/' + $(this).attr('id'),
-    data: { 'date': moment().format("MMM Do YYYY") },
+    data: { 'date': moment.utc().format() },
     dataType: 'JSON'
   }).done(function( response ) {
 
