@@ -21,6 +21,15 @@ router.post('/new', function(req, res) {
   });
 });
 
+/* Update contact date */
+router.put('/contacted/:id', function(req, res) {
+  var db = req.db;
+  var collection = db.get('contactcollection');
+  collection.update( { '_id': req.params.id }, { $set: { 'last_contact': req.body.date } }, function(err) {
+    res.send((err === null) ? { msg: '' } : { msg: 'error: ' + err});
+  });
+});
+
 /* Delete to contacts/delete */
 router.delete('/delete/:id', function(req, res) {
   var db = req.db;

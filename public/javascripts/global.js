@@ -4,6 +4,7 @@ $(function() {
 
   $('#new-contact-submit').on('click', addContact);
   $('#contactList table tbody').on('click', 'td a.link-delete-contact', deleteContact);
+  $('#contactList table tbody').on('click', 'button.contacted', updateContactDate);
 
   populateContactsTable();
 
@@ -16,7 +17,6 @@ function populateContactsTable() {
   $.getJSON( '/contacts/list', function( data ) {
 
     var contactArray = data.sort(function(a, b) {
-      console.log(a.last_contact);
       return a.last_contact - b.last_contact;
     });
 
@@ -27,6 +27,7 @@ function populateContactsTable() {
       tableContent += '</a></td>';
       tableContent += '<td>' + this.email + '</td>';
       tableContent += '<td>' + this.last_contact + '</td>';
+      tableContent += '<td><button class="success button contacted" id="' + this._id + '"> Yes! </button></td>';
       tableContent += '<td><a href="#" class="link-delete-contact" rel="' + this._id + '">Delete</a></td>';
       tableContent += '</tr>';
     });
@@ -101,4 +102,23 @@ function deleteContact(event) {
   } else {
     return false;
   }
+}
+
+function updateContactDate(event) {
+  event.preventDefault();
+
+  $.ajax({
+    type: 'PUT',
+    url: '/contacts/contacted/' + $(this).attr('id'),
+    data: { 'date': moment().format("MMM Do YYYY") },
+    dataType: 'JSON'
+  }).done(function( response ) {
+
+    if (response.msg === '') {
+      populateContactsTable();
+    } else {
+      alert('Error: ' + response.msg);
+    } 
+  });
+
 }
