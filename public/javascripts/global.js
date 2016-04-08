@@ -15,12 +15,18 @@ function populateContactsTable() {
 
   $.getJSON( '/contacts/list', function( data ) {
 
-    $.each(data, function() {
+    var contactArray = data.sort(function(a, b) {
+      console.log(a.last_contact);
+      return a.last_contact - b.last_contact;
+    });
+
+    $.each(contactArray, function() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="link-show-contact" rel="' + this.first_name + this.last_name + '">';
       tableContent += this.first_name + ' ' + this.last_name;
       tableContent += '</a></td>';
       tableContent += '<td>' + this.email + '</td>';
+      tableContent += '<td>' + this.last_contact + '</td>';
       tableContent += '<td><a href="#" class="link-delete-contact" rel="' + this._id + '">Delete</a></td>';
       tableContent += '</tr>';
     });
@@ -44,7 +50,8 @@ function addContact(event) {
     var newContact = {
       'first_name': $('#new-contact-form input#inputFirstName').val(),
       'last_name': $('#new-contact-form input#inputLastName').val(),
-      'email': $('#new-contact-form input#inputContactEmail').val()
+      'email': $('#new-contact-form input#inputContactEmail').val(),
+      'last_contact': moment().format("MMM Do YYYY")
     };
 
     $.ajax({
